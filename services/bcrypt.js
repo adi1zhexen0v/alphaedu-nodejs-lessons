@@ -10,4 +10,17 @@ export async function hashPassword(passwordFromRequest) {
   }
 }
 
-export async function isPasswordValid() {}
+export async function isPasswordValid(
+  passwordFromRequest,
+  passwordFromDatabase
+) {
+  try {
+    const passwordIsValid = await bcrypt.compare(
+      passwordFromRequest,
+      passwordFromDatabase
+    );
+    return passwordIsValid;
+  } catch (error) {
+    console.log(error);
+  }
+}

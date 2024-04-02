@@ -7,14 +7,15 @@ import {
   updatePost,
   deletePost,
 } from "../controllers/post.controller.js";
+import { authUser, checkIsManager } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
-router.post("/", createPost); // isManager: true
+router.post("/", authUser, checkIsManager, createPost); // isManager: true
 router.patch("/:id", updatePost); // isManager: true
 router.delete("/:id", deletePost); // isManager: true
-router.get("/", getAllPosts); // isManager: false
-router.get("/public", getPublicPosts);
+router.get("/", authUser, getAllPosts); // isManager: false
+router.get("/public", getPublicPosts); 
 router.get("/:id", getPostById); // isManager: false
 
 export default router;

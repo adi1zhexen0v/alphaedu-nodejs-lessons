@@ -20,3 +20,12 @@ export async function updateUser(req, res) {
     res.status(500).json({ error: error.toString() });
   }
 }
+
+export async function getMe(req, res) {
+  try {
+    const user = await User.findById(req.userId);
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ error: error.toString() });
+  }
+}

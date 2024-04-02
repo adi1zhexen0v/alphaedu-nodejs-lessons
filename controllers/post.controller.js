@@ -7,7 +7,7 @@ export async function createPost(req, res) {
     const result = await newUser.save();
     res.status(201).json(result);
   } catch (error) {
-    console.log(error);
+    res.status(500).json({ error: error.toString() });
   }
 }
 
@@ -16,7 +16,7 @@ export async function getPublicPosts(req, res) {
     const posts = await Post.find({ isPublic: true });
     res.json(posts);
   } catch (error) {
-    console.log(error);
+    res.status(500).json({ error: error.toString() });
   }
 }
 
@@ -25,7 +25,7 @@ export async function getAllPosts(req, res) {
     const posts = await Post.find();
     res.json(posts);
   } catch (error) {
-    console.log(error);
+    res.status(500).json({ error: error.toString() });
   }
 }
 
@@ -33,8 +33,49 @@ export async function getPostById(req, res) {
   try {
     const { id } = req.params;
     const post = await Post.findById(id);
+
+    if (!post) {
+      return res.status(404).json({ error: "Пост не найден" });
+    }
+
     res.json(post);
   } catch (error) {
-    console.log(error);
+    res.status(500).json({ error: error.toString() });
+  }
+}
+
+export async function updatePost(req, res) {
+  try {
+    const { id } = req.params;
+    const { title, text, isPublic } = req.body;
+
+    const updatedPost = await Post.findByIdAndUpdate(
+      id,
+      { title, text, isPublic },
+      { new: true }
+    );
+
+    if (!updatedPost) {
+      return res.status(404).json({ error: "Пост не найден" });
+    }
+
+    res.json(updatedPost);
+  } catch (error) {
+    res.status(500).json({ error: error.toString() });
+  }
+}
+
+export async function deletePost(req, res) {
+  try {
+    const { id } = req.params;
+    const deletedPost = await Post.findByIdAndDelete(id);
+
+    if (!deletedPost) {
+      return res.status(404).json({ error: "Post not found" });
+    }
+
+    res.status(204).json({ message: "Пост был успешно удален" });
+  } catch (error) {
+    res.status(500).json({ error: error.toString() });
   }
 }

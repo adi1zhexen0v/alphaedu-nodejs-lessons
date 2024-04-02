@@ -4,6 +4,8 @@ import {
   getAllPosts,
   getPublicPosts,
   getPostById,
+  updatePost,
+  deletePost,
 } from "../controllers/post.controller.js";
 
 const router = Router();

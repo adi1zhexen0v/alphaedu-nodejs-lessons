@@ -11,11 +11,11 @@ import { authUser, checkIsManager } from "../middlewares/auth.middleware.js";
 
 const router = Router();
 
-router.post("/", authUser, checkIsManager, createPost); // isManager: true
-router.patch("/:id", updatePost); // isManager: true
-router.delete("/:id", deletePost); // isManager: true
-router.get("/", authUser, getAllPosts); // isManager: false
-router.get("/public", getPublicPosts); 
-router.get("/:id", getPostById); // isManager: false
+router.post("/", authUser, checkIsManager, createPost);
+router.patch("/:id", authUser, checkIsManager, updatePost);
+router.delete("/:id", authUser, checkIsManager, deletePost);
+router.get("/", authUser, getAllPosts);
+router.get("/public", getPublicPosts);
+router.get("/:id", getPostById);
 
 export default router;

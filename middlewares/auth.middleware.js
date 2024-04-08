@@ -1,16 +1,11 @@
 import jwt from "jsonwebtoken";
 
 export const authUser = (req, res, next) => {
-  // Получаем заголовок авторизации
   const authHeader = req.headers.authorization;
-
-  // Проверяем, существует ли заголовок
   if (!authHeader) {
     return res.status(401).json({ message: "Токен отсутствует" });
   }
 
-  // Удаляем префикс "Bearer " из заголовка, если он присутствует
-  // Регулярное выражение /^Bearer\s+/ удаляет "Bearer " и все пробелы после него в начале строки
   const token = authHeader.replace(/^Bearer\s+/, "");
 
   try {

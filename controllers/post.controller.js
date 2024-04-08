@@ -3,7 +3,7 @@ import { Post } from "../models/Post.js";
 export async function createPost(req, res) {
   try {
     const { title, text, isPublic } = req.body;
-    const newUser = new Post({ title, text, isPublic });
+    const newUser = new Post({ title, text, isPublic, userId: req.userId });
     const result = await newUser.save();
     res.status(201).json(result);
   } catch (error) {

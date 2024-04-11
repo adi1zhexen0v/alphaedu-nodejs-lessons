@@ -3,17 +3,16 @@ import mongoose from "mongoose";
 import cors from "cors";
 import setupRoutes from "./routes/routes.js";
 import setupSwagger from "./swagger.js";
+import "dotenv/config";
 
 const app = express();
 const PORT = 4000;
-const dbUrl =
-  "mongodb+srv://mongouser:0fo9E6UTTr9csbJR@cluster0.sgal5gg.mongodb.net/alpha";
 
 app.use(cors());
 
 async function start() {
   try {
-    await mongoose.connect(dbUrl);
+    await mongoose.connect(process.env.DB_URL);
     console.log("Connected to MongoDB");
 
     setupRoutes(app);

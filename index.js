@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import cors from "cors";
 import setupRoutes from "./routes/routes.js";
+import setupSwagger from "./swagger.js";
 
 const app = express();
 const PORT = 4000;
@@ -16,6 +17,7 @@ async function start() {
     console.log("Connected to MongoDB");
 
     setupRoutes(app);
+    setupSwagger(app);
 
     app.listen(PORT, () => {
       console.log(`Server running at http://localhost:${PORT}`);
